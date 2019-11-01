@@ -1,0 +1,22 @@
+//Create a blank query in Power Query and paste this code into the advanced editor
+//Then name the function FnRemoveEmptyColumns
+//Source of code: https://datachant.com/2016/12/09/remove-empty-columns-rows-from-table-in-excel-power-query/
+
+(tbl) =>
+let
+    Headers = Table.ColumnNames(tbl),
+
+    fnMyAccumulator =
+        (tbl as table, columnName as text) as table =>
+            if List.MatchesAll(Table.Column(tbl, columnName), each _ is null) then Table.RemoveColumns(tbl, {columnName}) else tbl,
+    
+    myAccumulatedResult = List.Accumulate(
+        Headers,
+        tbl,
+        (tbl, columnName) => fnMyAccumulator(tbl, columnName))
+in
+    myAccumulatedResult
+    
+/*Then add this step to the M code for your table
+RemoveEmptyColumns = FnRemoveEmptyColumns('previous_step_name')
+*/
