@@ -1,0 +1,13 @@
+//Source: https://blog.crossjoin.co.uk/2015/05/11/nested-calculations-in-power-query/
+
+//This code is for the function that ranks rows in Power Query grouping by one column.
+
+(tabletorank as table) as table =>
+     let
+      SortRows = Table.Sort(tabletorank,{{"Sales", Order.Descending}}),
+      AddIndex = Table.AddIndexColumn(SortRows, "Rank", 1, 1)
+     in
+      AddIndex
+      
+//tabletorank is the previous step in your M code.
+//The "Sales" is the column you want to rank
