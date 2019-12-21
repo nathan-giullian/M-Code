@@ -1,0 +1,12 @@
+let
+    //Get data from Excel
+    Source = Excel.CurrentWorkbook(){[Name="Sales"]}[Content],
+    //Group by Month (or whatever column you want to group by)
+    Grouped = Table.Group(Source, {"Month"}, {{"AllRows", each _, type table}}),
+    //Apply that function to the AllRows column (RankFunction is the name of the function here. Make sure it matches the name of your function!
+    AddedRank = Table.TransformColumns(Grouped, {"AllRows", each RankFunction(_)}),
+    //Expand the tables in the AllRows column again
+    ExpandAgain = Table.ExpandTableColumn(AddedRank, "AllRows", 
+       {"Product", "Sales", "Rank"}, {"Product", "Sales", "Rank"})
+in
+    ExpandAgain
