@@ -1,0 +1,4 @@
+//source: https://stackoverflow.com/questions/53197587/power-query-check-if-string-contains-strings-from-a-list
+
+//This M Code allows you to check if the strings in column1 contain any of the strings in list1
+
