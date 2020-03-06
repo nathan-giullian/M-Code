@@ -2,3 +2,7 @@
 
 //This M Code allows you to check if the strings in column1 contain any of the strings in list1
 
+#"Custom Column" = Table.AddColumn(#"Previous Step Name", "Check", (C) => List.AnyTrue(List.Transform(#"List containing words", each Text.Contains(C[new_BusinessNameName], _))))
+
+//"Check" is the name of the new column created by this M. It is True if the row contains any of the text in the list
+//"List containing words" is the list, must be a list, that contains the words you want to compare to.
